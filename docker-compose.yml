@@ -14,7 +14,7 @@ services:
       bazarDB:
           condition: service_healthy
   bazarDB:
-    image: mysql:8.3.0 
+    image: mysql:8.0.33
     ports:
       - "3306:3306"
     environment:

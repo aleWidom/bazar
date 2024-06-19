@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  bazar:
+    build: D:\Escritorio\Ale\curso-springboot\bazar
+    mem_limit: 512m
+    ports:
+      - "8080:8080"
+    environment:
+      DB_URL: jdbc:mysql://bazarDB:3306/bazar?createDatabaseIfNotExist=true&serverTimezone=UTC
+      DB_USER_NAME: root
+      DB_PASSWORD: 
+    restart: always
+    depends_on:
+      bazarDB:
+          condition: service_healthy
+  bazarDB:
+    image: mysql:8.3.0 
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_PASSWORD: 1234
+      MYSQL_DATABASE: bazar
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 10s
+      retries: 10

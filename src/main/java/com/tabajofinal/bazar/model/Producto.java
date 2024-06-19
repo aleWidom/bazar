@@ -1,11 +1,10 @@
 package com.tabajofinal.bazar.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter @Setter
 @Entity
@@ -17,15 +16,18 @@ public class Producto {
     private String marca;
     private Double costo;
     private Double cantidad_disponible;
+    @ManyToMany(mappedBy = "listaProductos")
+    private List<Venta> listaVentas;
 
     public Producto() {
     }
 
-    public Producto(Long codigo_producto, String nombre, String marca, Double costo, Double cantidad_disponible) {
+    public Producto(Long codigo_producto, String nombre, String marca, Double costo, Double cantidad_disponible, List<Venta> listaVentas) {
         this.codigo_producto = codigo_producto;
         this.nombre = nombre;
         this.marca = marca;
         this.costo = costo;
         this.cantidad_disponible = cantidad_disponible;
+        this.listaVentas = listaVentas;
     }
 }

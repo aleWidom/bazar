@@ -15,11 +15,16 @@ public class Venta {
     private Long codigo_venta;
     private LocalDate fecha_venta;
     private Double total;
-    @OneToMany
-    private List<Producto> listaProductos;
-    @OneToOne
-    @JoinColumn(name = "cliente_id_cliente", referencedColumnName = "id_cliente")
+    @ManyToOne
+    @JoinColumn(name="cliente_id")
     private Cliente unCliente;
+    @ManyToMany
+    @JoinTable(
+            name = "venta_producto",
+            joinColumns = { @JoinColumn(name = "venta_id") },
+            inverseJoinColumns = { @JoinColumn(name = "producto_id") }
+    )
+    private List<Producto> listaProductos;
 
     public Venta() {
     }
@@ -32,14 +37,5 @@ public class Venta {
         this.unCliente = unCliente;
     }
 
-    @Override
-    public String toString() {
-        return "Venta{" +
-                "codigo_venta=" + codigo_venta +
-                ", fecha_venta=" + fecha_venta +
-                ", total=" + total +
-                ", listaProductos=" + listaProductos +
-                ", unCliente=" + unCliente +
-                '}';
-    }
+
 }
